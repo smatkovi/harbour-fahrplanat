@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Icon=harbour-fahrplanat
+Exec=harbour-fahrplanat
+Name=Fahrplan AT
+Name[de]=Fahrplan AT
+Comment=Fahrplanauskunft für Österreich mit Echtzeitdaten
+Comment[de]=Fahrplanauskunft für Österreich mit Echtzeitdaten
+
+[X-Sailjail]
+Permissions=Internet;Downloads
+OrganizationName=harbour-fahrplanat
+ApplicationName=harbour-fahrplanat

@@ -1,0 +1,73 @@
+diff --git a/qml/pure-maps.qml b/qml/pure-maps.qml
+index 64fb28e..9ef15a6 100644
+--- a/qml/pure-maps.qml
++++ b/qml/pure-maps.qml
+@@ -114,6 +114,28 @@ ApplicationWindowPL {
+             app.activate();
+         }
+ 
++        onShowRoute: {
++            var route = null;
++            try {
++                route = JSON.parse(routeJson);
++            } catch (e) {
++                console.log("ShowRoute: invalid JSON: " + e);
++                return;
++            }
++            if (!route || !route.x || !route.y || route.x.length < 2 || route.x.length !== route.y.length) {
++                console.log("ShowRoute: route needs matching x and y arrays with at least two points");
++                return;
++            }
++            if (!route.mode) route.mode = "foot";
++            if (!route.provider) route.provider = "external";
++            if (!route.maneuvers) route.maneuvers = [];
++            if (!route.locations) route.locations = [];
++            app.navigator.setRoute(route);
++            map.autoCenter = false;
++            map.fitViewToRoute();
++            app.activate();
++        }
++
+         onShowPoi: {
+             var radius = 50; // meters default radius
+             var p = pois.add({ "x": longitude, "y": latitude, "title": title });
+diff --git a/src/commander.h b/src/commander.h
+index 87bf823..f1df201 100644
+--- a/src/commander.h
++++ b/src/commander.h
+@@ -23,6 +23,7 @@ public:
+ signals:
+   void search(QString searchString);
+   void showPoi(QString title, double latitude, double longitude);
++  void showRoute(QString routeJson);
+ 
+ public:
+   static Commander* instance();
+diff --git a/src/dbusroot.cpp b/src/dbusroot.cpp
+index b7ae115..492aecf 100644
+--- a/src/dbusroot.cpp
++++ b/src/dbusroot.cpp
+@@ -54,3 +54,11 @@ void DBusRoot::ShowPoi(QString title, double latitude, double longitude)
+ {
+   Commander::instance()->showPoi(title, latitude, longitude);
+ }
++
++// Route handed over by another application. routeJson is a JSON object in the
++// same format the routers produce: x[] (longitudes), y[] (latitudes), mode,
++// optional maneuvers[], locations[], location_indexes[], language, provider.
++void DBusRoot::ShowRoute(QString routeJson)
++{
++  Commander::instance()->showRoute(routeJson);
++}
+diff --git a/src/dbusroot.h b/src/dbusroot.h
+index e795d82..b370aa0 100644
+--- a/src/dbusroot.h
++++ b/src/dbusroot.h
+@@ -39,6 +39,7 @@ public slots:
+ 
+   void Search(QString search_string);
+   void ShowPoi(QString title, double latitude, double longitude);
++  void ShowRoute(QString routeJson);
+ 
+ public:
+ 

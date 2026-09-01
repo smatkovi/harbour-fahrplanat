@@ -1,0 +1,38 @@
+* Tue Sep 01 2026 Sebastian Matkovich <smatkovi> 0.1.6-1
+- Map page: pulley menu with "In Pure Maps öffnen" and "Ganze Verbindung
+  anzeigen" instead of the footer button
+
+* Tue Sep 01 2026 Sebastian Matkovich <smatkovi> 0.1.5-1
+- In-app map page (OpenStreetMap tiles, own slippy-map implementation) showing
+  the walking leg or the whole connection with the HAFAS geometry; pinch and
+  double-tap zoom, drag to pan; hand-off button to Pure Maps
+- Tile requests identify the app and use a 64 MB disk cache
+
+* Tue Sep 01 2026 Sebastian Matkovich <smatkovi> 0.1.4-1
+- GPX export of walking legs goes to ~/Downloads/fahrplanat-fussweg.gpx
+  (Sailjail permission Downloads instead of Documents)
+
+* Tue Sep 01 2026 Sebastian Matkovich <smatkovi> 0.1.3-1
+- Colour scheme setting: red accent on light (default) or dark background,
+  or the ambience palette; implemented via Silica palette on all pages
+- Squircle app icon in the Sailfish icon shape
+
+* Tue Sep 01 2026 Sebastian Matkovich <smatkovi> 0.1.2-1
+- Walking legs: hand the complete footpath (server polyline) to Pure Maps via
+  the ShowRoute D-Bus method (see contrib/), GPX export fallback for stock
+  Pure Maps, destination POI as last resort
+- Product badges with pictograms and the server-provided line colours in the
+  results list and details; on-time real-time values in green
+- Sailjail: Documents permission for the GPX export
+
+* Tue Sep 01 2026 Sebastian Matkovich <smatkovi> 0.1.1-1
+- Show walking-leg destinations and stations in Pure Maps (D-Bus ShowPoi,
+  geo: URI fallback for other map apps)
+- Fix quick date buttons overflowing the screen width
+
+* Tue Sep 01 2026 Sebastian Matkovich <smatkovi> 0.1.0-1
+- Initial release: connection search (from/to/via, departure/arrival time,
+  product filter, direct connections, transfer time, wheelchair, bicycle,
+  Einfach-Raus-Ticket), connection details with intermediate stops,
+  platforms, real-time delays and cancellations, disruption messages
+  (HimSearch), location history with favourites, configurable HAFAS profile.
