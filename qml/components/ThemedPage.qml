@@ -12,7 +12,10 @@ Page {
     readonly property bool customTheme: colorTheme !== 0
     readonly property bool lightTheme: colorTheme === 1
     readonly property color accentColor: lightTheme ? "#c8102e" : "#ff3d55"
-    readonly property color pageBackground: lightTheme ? "#f7f7f7" : "#141416"
+    // Schwarz heisst hier wirklich 000000, nicht "fast schwarz": auf dem
+    // OLED des Geraets bleiben die Pixel damit aus, und der Rand einer Seite
+    // faellt nicht gegen den Hintergrund auf.
+    readonly property color pageBackground: lightTheme ? "#f7f7f7" : "#000000"
 
     palette.colorScheme: customTheme ? (lightTheme ? Theme.DarkOnLight : Theme.LightOnDark) : Theme.colorScheme
     palette.primaryColor: customTheme ? (lightTheme ? "#1f1f1f" : "#f2f2f2") : Theme.primaryColor
