@@ -13,6 +13,13 @@ JourneyModel::JourneyModel(HafasClient *client, AppSettings *settings, QObject *
     , m_client(client)
     , m_settings(settings)
 {
+    // Qt 4.7 fragt ein Modell nicht nach roleNames(): dort ist das ein
+    // gewoehnlicher Zugriff, kein virtueller. Die Namen muessen einmal
+    // gesetzt werden, sonst kennt QML keine einzige Rolle -- die Liste
+    // bleibt dann leer, ohne eine Meldung.
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+    setRoleNames(roleNames());
+#endif
 }
 
 int JourneyModel::rowCount(const QModelIndex &parent) const

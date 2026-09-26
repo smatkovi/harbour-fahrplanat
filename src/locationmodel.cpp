@@ -10,6 +10,13 @@ LocationModel::LocationModel(HafasClient *client, QObject *parent)
     : QAbstractListModel(parent)
     , m_client(client)
 {
+    // Qt 4.7 fragt ein Modell nicht nach roleNames(): dort ist das ein
+    // gewoehnlicher Zugriff, kein virtueller. Die Namen muessen einmal
+    // gesetzt werden, sonst kennt QML keine einzige Rolle -- die Liste
+    // bleibt dann leer, ohne eine Meldung.
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+    setRoleNames(roleNames());
+#endif
     m_debounce.setSingleShot(true);
     m_debounce.setInterval(300);
     connect(&m_debounce, SIGNAL(timeout()), this, SLOT(sendRequest()));
