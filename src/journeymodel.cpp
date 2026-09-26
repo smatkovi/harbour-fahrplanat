@@ -230,7 +230,7 @@ void JourneyModel::cancel()
 {
     if (m_reply) {
         HafasClient::abort(m_reply.data());
-        m_reply.clear();
+        m_reply = 0;   // QPointer::clear gibt es erst ab Qt 5
     }
     setBusy(false);
 }
@@ -317,7 +317,7 @@ void JourneyModel::sendRequest(Mode mode)
 {
     if (m_reply) {
         HafasClient::abort(m_reply.data());
-        m_reply.clear();
+        m_reply = 0;   // QPointer::clear gibt es erst ab Qt 5
     }
     setError(QString());
     setBusy(true);
@@ -328,7 +328,7 @@ void JourneyModel::sendRequest(Mode mode)
             if (!self) {
                 return;
             }
-            self->m_reply.clear();
+            self->m_reply = 0;   // QPointer::clear gibt es erst ab Qt 5
             self->setBusy(false);
             if (!errCode.isEmpty()) {
                 self->setError(errText);

@@ -10,6 +10,10 @@
 #include <QTimer>
 #include <QUrl>
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+#include "qt4replyhandler.h"
+#endif
+
 namespace
 {
     const int kTimeoutMs = 30000;
@@ -83,12 +87,33 @@ QNetworkReply *HafasClient::request(const QString &method, const QJsonObject &re
     QTimer *timeout = new QTimer(reply);
     timeout->setSingleShot(true);
     timeout->setInterval(kTimeoutMs);
-    connect(timeout, &QTimer::timeout, reply, &QNetworkReply::abort);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+    // Die Zeichenkettenform, nicht die Zeigerform: Qt 4.7 kennt nur jene.
+    connect(timeout, SIGNAL(timeout()), reply, SLOT(abort()));
+#endif
     timeout->start();
 
     QPointer<HafasClient> self(this);
     const bool logResponses = m_settings->logRequests();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     connect(reply, &QNetworkReply::finished, this, [self, reply, callback, method, logResponses]() {
+        replyFinished(self, reply, callback, method, logResponses);
+    });
+#else
+    // Qt 4.7 kann an keine Lambda binden; das erledigt das Hilfsobjekt. Es
+    // bricht auch bei Zeitueberschreitung ab: QNetworkReply::abort() ist hier
+    // noch kein Slot, ein connect darauf geht wortlos daneben.
+    new Qt4ReplyHandler(this, reply, callback, method, logResponses, timeout);
+#endif
+
+    return reply;
+}
+
+void HafasClient::replyFinished(const QPointer<HafasClient> &self, QNetworkReply *reply,
+                                const Callback &callback, const QString &method,
+                                bool logResponses)
+{
+    {
         if (self) {
             --self->m_pending;
             emit self->pendingRequestsChanged();
@@ -166,9 +191,7 @@ QNetworkReply *HafasClient::request(const QString &method, const QJsonObject &re
         }
 
         callback(svcRes.value(QStringLiteral("res")).toObject(), QString(), QString());
-    });
-
-    return reply;
+    }
 }
 
 void HafasClient::abort(QNetworkReply *reply)

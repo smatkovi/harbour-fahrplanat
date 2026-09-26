@@ -1,0 +1,6 @@
+# Von Hand geschrieben: die beiden Waehler, die dieser Port aus
+# com.nokia.extras nimmt. Die echten liegen im SDK unter
+# imports/com/nokia/extras.1.1 und bringen ein Plugin mit, das sich hier nicht
+# laden laesst.
+DatePickerDialog 1.1 DatePickerDialog.qml
+TimePickerDialog 1.1 TimePickerDialog.qml

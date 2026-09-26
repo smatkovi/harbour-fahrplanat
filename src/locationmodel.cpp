@@ -12,7 +12,7 @@ LocationModel::LocationModel(HafasClient *client, QObject *parent)
 {
     m_debounce.setSingleShot(true);
     m_debounce.setInterval(300);
-    connect(&m_debounce, &QTimer::timeout, this, &LocationModel::sendRequest);
+    connect(&m_debounce, SIGNAL(timeout()), this, SLOT(sendRequest()));
 }
 
 int LocationModel::rowCount(const QModelIndex &parent) const
@@ -82,7 +82,7 @@ void LocationModel::search(const QString &query)
     m_pendingQuery = q;
     if (m_reply) {
         HafasClient::abort(m_reply.data());
-        m_reply.clear();
+        m_reply = 0;   // QPointer::clear gibt es erst ab Qt 5
     }
     if (q.length() < 2) {
         m_debounce.stop();
@@ -139,7 +139,7 @@ void LocationModel::sendRequest()
             if (!self || q != self->m_pendingQuery) {
                 return;
             }
-            self->m_reply.clear();
+            self->m_reply = 0;   // QPointer::clear gibt es erst ab Qt 5
             self->setBusy(false);
             if (!errCode.isEmpty()) {
                 if (errCode != QLatin1String("NO_MATCH") && errCode != QLatin1String("LOCATION")) {

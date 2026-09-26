@@ -139,7 +139,7 @@ void HimModel::load()
 {
     if (m_reply) {
         HafasClient::abort(m_reply.data());
-        m_reply.clear();
+        m_reply = 0;   // QPointer::clear gibt es erst ab Qt 5
     }
     const QDateTime now = QDateTime::currentDateTime();
     QJsonObject req;
@@ -157,7 +157,7 @@ void HimModel::load()
             if (!self) {
                 return;
             }
-            self->m_reply.clear();
+            self->m_reply = 0;   // QPointer::clear gibt es erst ab Qt 5
             self->setBusy(false);
             if (!errCode.isEmpty()) {
                 if (errCode == QLatin1String("NO_MATCH")) {

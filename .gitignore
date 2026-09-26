@@ -1,7 +1,2 @@
-*.pro.user
-*.pro.user.*
 build/
-RPMS/
-tests/build/
-*.o
-moc_*
+*.deb

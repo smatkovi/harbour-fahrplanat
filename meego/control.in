@@ -1,0 +1,21 @@
+Package: harbour-fahrplanat
+Version: @VERSION@
+Architecture: armel
+Maintainer: Sebastian Matkovich <sebastian.matkovich@gmail.com>
+Depends: libqtcore4, libqtgui4, libqt4-network, libqt4-declarative, libqt4-dbus, qt-components
+Section: user/navigation
+Priority: optional
+Description: Fahrplanauskunft fuer Oesterreich
+ Verbindungen, Echtzeitdaten und Stoerungsmeldungen aus der HAFAS-Schnittstelle
+ von fahrplan.oebb.at -- derselben, die auch die offizielle Scotty-App benutzt.
+ Nicht mit den OeBB oder HaCon verbunden.
+ .
+ Die MeeGo-Ausgabe der Sailfish-App: Qt 4.7 mit com.nokia.meego statt Silica.
+ Die Karte im Programm zeichnet OpenStreetMap-Kacheln selbst; eine Uebergabe
+ an eine Karten-App geschieht ueber eine geo:-Adresse.
+ .
+ HTTPS braucht TLS 1.2, das die Werks-OpenSSL 0.9.8 dieses Geraets nicht kann.
+ Qt 4 nimmt eine neuere libssl aus /usr/local/lib, wenn eine da ist.
+Maemo-Display-Name: Fahrplan AT
+XB-Maemo-Icon-26:
+@ICON@

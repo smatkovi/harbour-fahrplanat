@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include <QNetworkAccessManager>
 #include <QObject>
+#include <QPointer>
 #include <QString>
 
 #include <functional>
@@ -35,6 +36,16 @@ public:
 
     // Translates HAFAS error codes to German messages.
     static QString friendlyError(const QString &code, const QString &errTxt, const QString &errTxtOut);
+
+    // What used to be the body of the finished-lambda. It is a named function
+    // because Qt 4.7 cannot connect a signal to a lambda at all, and the
+    // MeeGo build routes the same code through a small handler object
+    // (meego/qt4replyhandler.h) instead. Static and taking the client as a
+    // QPointer, because the client may be gone by the time the reply is:
+    // the callback still has to run.
+    static void replyFinished(const QPointer<HafasClient> &self, QNetworkReply *reply,
+                              const Callback &callback, const QString &method,
+                              bool logResponses);
 
 signals:
     void pendingRequestsChanged();

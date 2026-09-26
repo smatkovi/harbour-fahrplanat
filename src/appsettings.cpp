@@ -223,7 +223,15 @@ void AppSettings::setEinfachRaus(bool v)
 
 int AppSettings::colorTheme() const
 {
-    return m_settings.value(QStringLiteral("ui/colorTheme"), 1).toInt();
+    // 1 = rot auf hellem Grund, 2 = rot auf schwarzem, 0 = Ambiente.
+    // Auf Harmattan ist die Oberflaeche durchgehend dunkel (theme.inverted),
+    // und der Bildschirm ist ein OLED: dort ist Schwarz die Voreinstellung.
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+    const int vorgabe = 2;
+#else
+    const int vorgabe = 1;
+#endif
+    return m_settings.value(QStringLiteral("ui/colorTheme"), vorgabe).toInt();
 }
 
 void AppSettings::setColorTheme(int theme)
