@@ -16,6 +16,7 @@ BusyIndicatorStyle 1.0 BusyIndicatorStyle.qml
 SelectionDialog 1.0 SelectionDialog.qml
 Sheet 1.0 Sheet.qml
 ToolBar 1.0 ToolBar.qml
+ToolBarLayout 1.0 ToolBarLayout.qml
 ToolIcon 1.0 ToolIcon.qml
 ProgressBar 1.0 ProgressBar.qml
 ScrollDecorator 1.0 ScrollDecorator.qml

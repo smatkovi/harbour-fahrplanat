@@ -32,6 +32,17 @@ Page {
 
     orientationLock: PageOrientation.Automatic
 
+    // Der Weg zurueck. Auf Sailfish wischt man von links herein; hier gibt es
+    // dafuer gar nichts, und ohne diesen Pfeil blieb man in den
+    // Verbindungsdetails stecken.
+    tools: ToolBarLayout {
+        ToolIcon {
+            iconId: "toolbar-back"
+            visible: pageStack !== null && pageStack.depth > 1
+            onClicked: pageStack.pop()
+        }
+    }
+
     Rectangle {
         anchors.fill: parent
         color: themedPage.pageBackground

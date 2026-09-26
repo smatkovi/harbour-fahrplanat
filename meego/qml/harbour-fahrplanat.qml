@@ -13,7 +13,10 @@ PageStackWindow {
     id: appWindow
 
     showStatusBar: true
-    showToolBar: false
+    // Mit Leiste, sonst kommt man aus einer Unterseite nicht mehr zurueck:
+    // Harmattan hat keine Rueckwaerts-Geste, der Weg zurueck ist der Pfeil
+    // links unten. Den Eintrag dafuer bringt jede Seite mit (ThemedPage).
+    showToolBar: true
 
     // Der Grund ist schwarz, nicht "fast schwarz": auf dem OLED bleiben die
     // Pixel damit aus.

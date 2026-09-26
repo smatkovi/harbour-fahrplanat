@@ -45,7 +45,7 @@ BASE = {
 TYPES = ["Page", "PageStack", "PageStackWindow", "Menu", "MenuLayout", "MenuItem",
          "Button", "Switch", "TextField", "TextArea", "Slider", "SliderTemplate",
          "BusyIndicator", "BusyIndicatorStyle", "SelectionDialog", "Sheet",
-         "ToolBar", "ToolIcon", "ProgressBar", "ScrollDecorator", "Label",
+         "ToolBar", "ToolBarLayout", "ToolIcon", "ProgressBar", "ScrollDecorator", "Label",
          "Dialog", "CommonDialog", "QueryDialog", "Window"]
 
 # Property types an Item-based stand-in can carry as they are. Anything else
