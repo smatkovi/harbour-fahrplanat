@@ -31,6 +31,16 @@ else
 fi
 echo "Baurechner: $HOST"
 
+# Uebertragen wird der Arbeitsbaum, nicht ein Zweig: auf dem meego-Zweig stehen
+# eine andere .pro und eine andere Spec, das Ergebnis waere stillschweigend die
+# alte Version. Deshalb sagen, was gebaut wird, und auf main bestehen.
+BRANCH=$(git -C "$SRC" rev-parse --abbrev-ref HEAD)
+echo "Zweig: $BRANCH, $(grep -m1 '^Version:' "$SRC/rpm/harbour-fahrplanat.spec")"
+if [ "$BRANCH" != main ] && [ -z "$ALLOW_BRANCH" ]; then
+    echo "Nicht auf main -- mit ALLOW_BRANCH=1 trotzdem bauen." >&2
+    exit 1
+fi
+
 ssh "$HOST" "mkdir -p $REMOTE/src"
 rsync -a --partial --delete --exclude .git --exclude build --exclude '*.o' \
     "$SRC/" "$HOST:$REMOTE/src/"
