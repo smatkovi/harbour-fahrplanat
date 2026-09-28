@@ -1,3 +1,10 @@
+* Mon Sep 28 2026 Sebastian Matkovich <smatkovi> 0.1.7-1
+- Dark background is pure black (#000000) now instead of #141416, so the pixels
+  stay off on the OLED display
+- The armv7hl and i486 packages of 0.1.6 shipped an aarch64 binary: all targets
+  had been built in one and the same source tree. Every architecture is built
+  in its own clean tree now (tools/build-rpms.sh)
+
 * Tue Sep 01 2026 Sebastian Matkovich <smatkovi> 0.1.6-1
 - Map page: pulley menu with "In Pure Maps öffnen" and "Ganze Verbindung
   anzeigen" instead of the footer button

@@ -5,7 +5,7 @@ CONFIG += sailfishapp c++11
 QT += network dbus
 
 isEmpty(VERSION) {
-    VERSION = 0.1.6
+    VERSION = 0.1.7
 }
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 

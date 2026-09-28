@@ -1,7 +1,7 @@
 Name:       harbour-fahrplanat
 
 Summary:    Fahrplanauskunft für Österreich (inoffizieller HAFAS-Client)
-Version:    0.1.6
+Version:    0.1.7
 Release:    1
 License:    GPLv3
 URL:        https://github.com/smatkovi/harbour-fahrplanat
